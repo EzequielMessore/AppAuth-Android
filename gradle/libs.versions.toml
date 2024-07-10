@@ -1,0 +1,65 @@
+[versions]
+# Androidx
+annotationVersion = "1.8.0"
+appcompatVersion = "1.7.0"
+browserVersion = "1.8.0"
+
+# Ktor
+ktorVersion = "2.3.7"
+
+# Koin
+koin-bom = "3.5.6"
+
+
+gradle = "8.0.2"
+grgitGradle = "4.1.1"
+orgJacocoCore = "0.8.7"
+kotlinGradlePlugin = "2.0.0"
+kotlinSerialization = "2.0.0"
+kotlinSerializationJson = "1.7.0"
+
+# Project versions
+compileSdk = "33"
+minSdk = "26"
+startupRuntimeVersion = "1.1.1"
+versionCode = "1"
+versionName = "1.0.0"
+coreKtxVersion = "1.13.1"
+kotlinVersion = "2.0.0"
+
+[libraries]
+# AndroidX
+androidx-browser = { module = "androidx.browser:browser", version.ref = "browserVersion" }
+androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompatVersion" }
+androidx-annotation = { module = "androidx.annotation:annotation", version.ref = "annotationVersion" }
+
+# Ktor
+androidx-startup-runtime = { module = "androidx.startup:startup-runtime", version.ref = "startupRuntimeVersion" }
+ktor-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktorVersion" }
+ktor-core = { module = "io.ktor:ktor-client-core", version.ref = "ktorVersion" }
+ktor-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktorVersion" }
+ktor-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktorVersion" }
+ktor-serialization = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktorVersion" }
+
+# Koin
+koin-bom = { module = "io.insert-koin:koin-bom", version.ref = "koin-bom" }
+koin-android = { module = "io.insert-koin:koin-android" }
+koin-ktor = { module = "io.insert-koin:koin-ktor" }
+koin-logger-slf4j = { module = "io.insert-koin:koin-logger-slf4j" }
+
+# Kotlin
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinSerializationJson" }
+
+# Gradle
+gradle = { module = "com.android.tools.build:gradle", version.ref = "gradle" }
+org-jacoco-core = { module = "org.jacoco:org.jacoco.core", version.ref = "orgJacocoCore" }
+grgit-gradle = { module = "org.ajoberstar.grgit:grgit-gradle", version.ref = "grgitGradle" }
+kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlinGradlePlugin" }
+kotlin-serialization-gradle = { module = "org.jetbrains.kotlin:kotlin-serialization", version.ref = "kotlinSerialization" }
+androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtxVersion" }
+
+[plugins]
+jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlinVersion" }
+
+[bundles]
+ktor = ["ktor-core", "ktor-logging", "ktor-content-negotiation", "ktor-okhttp", "ktor-serialization"]
