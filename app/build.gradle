@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'checkstyle'
 apply from: '../config/android-common.gradle'
-apply from: '../config/keystore.gradle'
+apply plugin: 'org.jetbrains.kotlin.android'
 
 android {
     namespace 'net.openid.appauthdemo'
@@ -13,48 +13,30 @@ android {
         // Make sure this is consistent with the redirect URI used in res/raw/auth_config.json,
         // or specify additional redirect URIs in AndroidManifest.xml
         manifestPlaceholders = [
-                'appAuthRedirectScheme': 'net.openid.appauthdemo'
+            'appAuthRedirectScheme': 'net.openid.appauthdemo'
         ]
     }
 
-    signingConfigs {
-        debugAndRelease {
-            storeFile file("${rootDir}/appauth.keystore")
-            storePassword "appauth"
-            keyAlias "appauth"
-            keyPassword "appauth"
-        }
-    }
-
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
 
     lintOptions {
         lintConfig = file("${projectDir}/lint.xml")
     }
 
-    buildTypes {
-        debug {
-            signingConfig signingConfigs.debugAndRelease
-        }
-        release {
-            signingConfig signingConfigs.debugAndRelease
-        }
+    kotlinOptions {
+        jvmTarget = '17'
     }
 }
 
 dependencies {
-    implementation project(':library')
+//     implementation project(':kotlin-library')
+    implementation("com.github.ezequielmessore:appauth-android:1.0.0")
     implementation "androidx.appcompat:appcompat:${project.androidXVersions.appcompat}"
     implementation "androidx.annotation:annotation:${project.androidXVersions.annotation}"
     implementation "com.google.android.material:material:${project.googleVersions.material}"
-    implementation "com.github.bumptech.glide:glide:${project.googleVersions.glide}"
-    implementation "com.squareup.okio:okio:${project.okioVersion}"
-    implementation "joda-time:joda-time:${project.jodaVersion}"
-
-    annotationProcessor "com.github.bumptech.glide:compiler:${project.googleVersions.glide}"
 }
 
 apply from: '../config/style.gradle'

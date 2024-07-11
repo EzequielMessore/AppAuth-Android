@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name_short">AppAuth</string>
+    <string name="app_name_short">Test Auth</string>
     <string name="auth_granted">Authorization granted</string>
     <string name="intro_header">OpenID AppAuth Demo</string>
     <string name="openid_logo_content_description">AppAuth Logo</string>
