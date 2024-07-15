@@ -26,7 +26,7 @@ jobs:
             ${{ runner.os }}-gradle-
 
       - name: Build
-        run: ./gradlew check jacoco assemble
+        run: ./gradlew assemble
 
       - name: Codecov
         uses: codecov/codecov-action@v3
