@@ -16,4 +16,6 @@ data class AuthorizationServiceDiscovery(
     val subjectTypesSupported: List<String>,
     @SerialName("id_token_signing_alg_values_supported")
     val idTokenSigningAlgorithmValuesSupported: List<String>,
+    @SerialName("userinfo_endpoint")
+    val userinfoEndpoint: String,
 )

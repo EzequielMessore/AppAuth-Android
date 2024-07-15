@@ -22,7 +22,7 @@ data class AuthState(
     val lastAuthorizationResponse: AuthorizationResponse? = null,
 ) {
     constructor(
-        authError: AuthorizationException?,
+        authError: AuthorizationException? = null,
         authResponse: AuthorizationResponse?,
     ) : this(lastAuthorizationResponse = authResponse) {
         authorizationException = authError
@@ -38,7 +38,7 @@ data class AuthState(
     constructor(
         authResponse: AuthorizationResponse?,
         tokenResponse: TokenResponse?,
-        authError: AuthorizationException?,
+        authError: AuthorizationException? = null,
     ) : this(lastAuthorizationResponse = authResponse, lastTokenResponse = tokenResponse) {
         authorizationException = authError
         update(tokenResponse, authError)
@@ -46,7 +46,7 @@ data class AuthState(
 
     constructor(
         tokenResponse: TokenResponse?,
-        authException: AuthorizationException?,
+        authException: AuthorizationException? = null,
     ) : this(lastTokenResponse = tokenResponse) {
         authorizationException = authException
         update(tokenResponse, authException)
@@ -80,9 +80,8 @@ data class AuthState(
         needsTokenRefreshOverride = needsTokenRefresh
     }
 
-    fun getNeedsTokenRefresh(): Boolean {
-        return getNeedsTokenRefresh(SystemClock.INSTANCE)
-    }
+    val needsTokenRefresh: Boolean
+        get() = getNeedsTokenRefresh(SystemClock.INSTANCE)
 
     private fun getNeedsTokenRefresh(clock: Clock): Boolean {
         if (needsTokenRefreshOverride) return true

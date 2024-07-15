@@ -104,7 +104,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateVisibility() {
-        if (authStateManager.current.isAuthorized && authStateManager.current.getNeedsTokenRefresh()) {
+        if (authStateManager.current.isAuthorized && authStateManager.current.needsTokenRefresh) {
             buttonLogin.isVisible = false
             buttonLogout.isVisible = true
         } else {
@@ -114,8 +114,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private suspend fun createAuthRequestIntent(): Intent {
-
-
         val config = getConfiguration()
 
         val request = AuthorizationRequest.Builder(configuration = config)
@@ -143,7 +141,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private suspend fun getConfiguration() = suspendCancellableCoroutine { continuation ->
-
         lifecycleScope.launch {
             val result = networkDataSource.fetchFromUrl(issuer)
             result.fold(
