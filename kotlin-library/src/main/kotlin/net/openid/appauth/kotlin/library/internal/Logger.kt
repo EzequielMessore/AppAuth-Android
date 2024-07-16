@@ -54,7 +54,7 @@ class Logger private constructor(private val mLog: LogWrapper) {
     }
 
     companion object {
-        private const val LOG_TAG = "AppAuth"
+        private const val LOG_TAG = "AppAuth-Logger"
         private var sInstance: Logger? = null
 
         @get:Synchronized

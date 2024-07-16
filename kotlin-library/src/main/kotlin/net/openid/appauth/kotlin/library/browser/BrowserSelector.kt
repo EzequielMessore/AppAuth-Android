@@ -41,6 +41,12 @@ object BrowserSelector {
                 continue
             }
 
+            // Samsung Internet is known to have issues with Custom Tabs
+            if (info.activityInfo.packageName.startsWith("com.sec.android.app.sbrowser") ||
+                info.activityInfo.packageName.contains("samsung", ignoreCase = true)) {
+                continue
+            }
+
             try {
                 var defaultBrowserIndex = 0
                 val packageInfo = pm.getPackageInfo(

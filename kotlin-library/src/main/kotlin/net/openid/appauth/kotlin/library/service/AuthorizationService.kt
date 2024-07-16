@@ -1,6 +1,5 @@
 package net.openid.appauth.kotlin.library.service
 
-import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -44,35 +43,36 @@ class AuthorizationService(
         disposed = true
     }
 
-    fun getAuthorizationRequestIntent(request: AuthorizationRequest) =
-        getAuthorizationRequestIntent(request, createCustomTabsIntentBuilder().build())
-
-    fun getEndSessionRequestIntent(request: AuthorizationManagementRequest) =
-        getEndSessionRequestIntent(request, createCustomTabsIntentBuilder().build())
-
-    private fun getAuthorizationRequestIntent(request: AuthorizationRequest, customTabsIntent: CustomTabsIntent): Intent {
-        val authIntent = prepareAuthorizationRequestIntent(request, customTabsIntent)
-        return AuthorizationManagementActivity.createStartForResultIntent(
-            context = context,
-            request = request,
-            authIntent = authIntent,
-        )
+    fun getAuthorizationRequestIntent(request: AuthorizationRequest): Result<Intent> {
+        val customTabsIntent = createCustomTabsIntentBuilder().build()
+        val authIntentResult = prepareRequestIntent(request, customTabsIntent)
+        return authIntentResult.map { authIntent ->
+            AuthorizationManagementActivity.createStartForResultIntent(
+                context = context,
+                request = request,
+                authIntent = authIntent,
+            )
+        }
     }
 
-    private fun getEndSessionRequestIntent(request: AuthorizationManagementRequest, customTabsIntent: CustomTabsIntent): Intent {
-        val endSessionIntent = prepareAuthorizationRequestIntent(request, customTabsIntent)
-        return AuthorizationManagementActivity.createStartForResultIntent(
-            context = context,
-            request = request,
-            authIntent = endSessionIntent,
-        )
+    fun getEndSessionRequestIntent(request: AuthorizationManagementRequest): Result<Intent> {
+        val customTabsIntent = createCustomTabsIntentBuilder().build()
+        val endSessionIntentResult = prepareRequestIntent(request, customTabsIntent)
+        return endSessionIntentResult.map { endSessionIntent ->
+            AuthorizationManagementActivity.createStartForResultIntent(
+                context = context,
+                request = request,
+                authIntent = endSessionIntent,
+            )
+        }
     }
 
-    private fun prepareAuthorizationRequestIntent(request: AuthorizationManagementRequest, customTabsIntent: CustomTabsIntent): Intent {
+    private fun prepareRequestIntent(request: AuthorizationManagementRequest, customTabsIntent: CustomTabsIntent): Result<Intent> {
         checkNotDisposed()
 
         if (browser == null) {
-            throw ActivityNotFoundException()
+            Logger.warn("No browser available")
+            return Result.failure(IllegalStateException("No browser available"))
         }
 
         val requestUri = request.toUri()
@@ -90,6 +90,6 @@ class AuthorizationService(
             browser.useCustomTab.toString()
         )
 
-        return intent
+        return Result.success(intent)
     }
 }
