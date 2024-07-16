@@ -3,11 +3,10 @@ package net.openid.appauth.kotlin.library.model
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
-import net.openid.appauth.kotlin.library.exception.AuthorizationException
-import net.openid.appauth.kotlin.library.networking.AuthorizationServiceApi
 
 @Serializable
 data class AuthorizationServiceConfiguration(
+    val issuer: String? = null,
     @SerialName("authorization_endpoint")
     val authorizationEndpoint: String,
     @SerialName("token_endpoint")
@@ -16,7 +15,8 @@ data class AuthorizationServiceConfiguration(
     val endSessionEndpoint: String? = null,
     @SerialName("registration_endpoint")
     val registrationEndpoint: String? = null,
-    val discovery: AuthorizationServiceDiscovery? = null,
+    @SerialName("userinfo_endpoint")
+    val userInfoEndpoint: String? = null,
 ) {
 
     fun toJson(): String {

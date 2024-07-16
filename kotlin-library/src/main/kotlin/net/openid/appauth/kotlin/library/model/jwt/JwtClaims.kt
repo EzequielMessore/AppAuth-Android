@@ -7,7 +7,7 @@ data class JwtClaims(
     val exp: Long?,
     val iat: Long?,
     val iss: String?,
-    val aud: List<String>?,
+    val aud: String?,
     val sub: String?,
     val azp: String?,
     val nonce: String?,

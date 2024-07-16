@@ -15,7 +15,7 @@ import net.openid.appauth.kotlin.library.utils.Clock
 data class IdToken(
     val issuer: String,
     val subject: String,
-    val audience: List<String>,
+    val audience: String,
     val expiration: Long,
     val issuedAt: Long,
     val nonce: String? = null,
@@ -27,9 +27,7 @@ data class IdToken(
     }
 
     private fun validate(tokenRequest: TokenRequest, clock: Clock, skipIssuerHttpsChecks: Boolean) {
-        val discovery = tokenRequest.configuration.discovery
-        discovery?.let {
-            val expectedIssuer = discovery.issuer
+        tokenRequest.configuration.issuer?.let { expectedIssuer ->
             if (this.issuer != expectedIssuer) {
                 throw AuthorizationException.fromTemplate(
                     AuthorizationException.GeneralErrors.ID_TOKEN_VALIDATION_ERROR,
@@ -124,7 +122,7 @@ data class IdToken(
         }
 
     }
-    
+
     companion object {
         private const val MILLIS_PER_SECOND = 1000L
         private const val TEN_MINUTES_IN_SECONDS = 600L
@@ -132,7 +130,7 @@ data class IdToken(
         private fun parseJwtSection(jwtSection: String): JwtClaims? = runCatching {
             val decodedSection = Base64.decode(jwtSection, Base64.URL_SAFE)
             val jsonString = String(decodedSection)
-            return Json.decodeFromString(JwtClaims.serializer(), jsonString)
+            return Json { ignoreUnknownKeys = true }.decodeFromString(string = jsonString, deserializer = JwtClaims.serializer())
         }.getOrNull()
 
         fun from(token: String?): IdToken {
