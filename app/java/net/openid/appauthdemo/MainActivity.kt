@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
@@ -91,20 +92,26 @@ class MainActivity : AppCompatActivity() {
         buttonLogin.setOnClickListener {
             lifecycleScope.launch {
                 val intent = createAuthRequestIntent()
-                launcher.launch(intent)
+                    .onFailure {
+                        Toast.makeText(this@MainActivity, it.message, Toast.LENGTH_SHORT).show()
+                    }.getOrNull()
+                intent?.let(launcher::launch)
             }
         }
 
         buttonLogout.setOnClickListener {
             lifecycleScope.launch {
-                val intent = createEndSessionRequestIntent() ?: return@launch
-                launcherLogout.launch(intent)
+                val intent = createEndSessionRequestIntent()
+                    ?.onFailure {
+                        Toast.makeText(this@MainActivity, it.message, Toast.LENGTH_SHORT).show()
+                    }?.getOrNull()
+                intent?.let(launcherLogout::launch)
             }
         }
     }
 
     private fun updateVisibility() {
-        if (authStateManager.current.isAuthorized && authStateManager.current.needsTokenRefresh) {
+        if (authStateManager.current.isAuthorized && !authStateManager.current.needsTokenRefresh) {
             buttonLogin.isVisible = false
             buttonLogout.isVisible = true
         } else {
@@ -113,7 +120,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private suspend fun createAuthRequestIntent(): Intent {
+    private suspend fun createAuthRequestIntent(): Result<Intent> {
         val config = getConfiguration()
 
         val request = AuthorizationRequest.Builder(configuration = config)
@@ -127,7 +134,7 @@ class MainActivity : AppCompatActivity() {
             .getAuthorizationRequestIntent(request)
     }
 
-    private fun createEndSessionRequestIntent(): Intent? {
+    private fun createEndSessionRequestIntent(): Result<Intent>? {
         val state = authStateManager.current
         return state.authorizationServiceConfiguration?.let {
             val request = EndSessionRequest.Builder(it)
