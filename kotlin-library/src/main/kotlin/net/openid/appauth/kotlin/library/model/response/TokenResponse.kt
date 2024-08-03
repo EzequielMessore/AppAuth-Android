@@ -18,6 +18,7 @@ data class TokenResponse(
     val tokenType: String?,
     @SerialName("access_token")
     val accessToken: String?,
+    @SerialName("expires_in")
     val expiresIn: Long? = null,
     @SerialName("expires_at")
     val expiresAt: Long? = null,
