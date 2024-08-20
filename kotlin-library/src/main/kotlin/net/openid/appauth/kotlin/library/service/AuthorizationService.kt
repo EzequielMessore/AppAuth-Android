@@ -8,6 +8,7 @@ import net.openid.appauth.kotlin.library.activity.AuthorizationManagementActivit
 import net.openid.appauth.kotlin.library.browser.BrowserDescriptor
 import net.openid.appauth.kotlin.library.browser.BrowserSelector
 import net.openid.appauth.kotlin.library.browser.CustomTabManager
+import net.openid.appauth.kotlin.library.exception.NoBrowserException
 import net.openid.appauth.kotlin.library.internal.Logger
 import net.openid.appauth.kotlin.library.model.AuthorizationManagementRequest
 import net.openid.appauth.kotlin.library.model.request.AuthorizationRequest
@@ -72,7 +73,7 @@ class AuthorizationService(
 
         if (browser == null) {
             Logger.warn("No browser available")
-            return Result.failure(IllegalStateException("No browser available"))
+            return Result.failure(NoBrowserException())
         }
 
         val requestUri = request.toUri()
