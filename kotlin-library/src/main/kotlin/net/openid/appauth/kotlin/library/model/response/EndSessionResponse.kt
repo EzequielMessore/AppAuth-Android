@@ -3,7 +3,7 @@ package net.openid.appauth.kotlin.library.model.response
 import android.content.Intent
 import android.net.Uri
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.json.Json
+import net.openid.appauth.kotlin.library.json.libJson
 import net.openid.appauth.kotlin.library.model.AuthorizationManagementResponse
 import net.openid.appauth.kotlin.library.model.request.EndSessionRequest
 
@@ -18,7 +18,7 @@ data class EndSessionResponse(
     }
 
     override fun jsonSerialize(): String =
-        Json.encodeToString(value = this, serializer = serializer())
+        libJson.encodeToString(value = this, serializer = serializer())
 
     class Builder(
         private val request: EndSessionRequest,
@@ -47,7 +47,7 @@ data class EndSessionResponse(
         }
 
         fun jsonDeserialize(json: String): EndSessionResponse {
-            return Json.decodeFromString(string = json, deserializer = serializer())
+            return libJson.decodeFromString(string = json, deserializer = serializer())
         }
 
         fun fromIntent(intent: Intent?): EndSessionResponse? {

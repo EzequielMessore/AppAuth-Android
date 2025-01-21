@@ -4,6 +4,7 @@ import java.util.concurrent.TimeUnit
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import net.openid.appauth.kotlin.library.extension.checkAdditionalParams
+import net.openid.appauth.kotlin.library.json.libJson
 import net.openid.appauth.kotlin.library.model.request.RegistrationRequest
 import net.openid.appauth.kotlin.library.utils.Clock
 import net.openid.appauth.kotlin.library.utils.SystemClock
@@ -22,7 +23,7 @@ data class RegistrationResponse(
 ) {
 
     fun jsonSerialize() =
-        Json.encodeToString(value = this, serializer = serializer())
+        libJson.encodeToString(value = this, serializer = serializer())
 
     fun hasClientSecretExpired(): Boolean {
         return hasClientSecretExpired(SystemClock.INSTANCE)
@@ -112,6 +113,6 @@ data class RegistrationResponse(
         )
 
         fun jsonDeserialize(json: String) =
-            Json.decodeFromString<RegistrationResponse>(json)
+            libJson.decodeFromString<RegistrationResponse>(json)
     }
 }

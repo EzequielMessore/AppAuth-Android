@@ -7,6 +7,7 @@ import kotlinx.serialization.json.Json
 import net.openid.appauth.kotlin.library.extension.checkAdditionalParams
 import net.openid.appauth.kotlin.library.extension.checkNotEmpty
 import net.openid.appauth.kotlin.library.extension.stringToSet
+import net.openid.appauth.kotlin.library.json.libJson
 import net.openid.appauth.kotlin.library.model.request.TokenRequest
 import net.openid.appauth.kotlin.library.utils.Clock
 import net.openid.appauth.kotlin.library.utils.SystemClock
@@ -39,7 +40,7 @@ data class TokenResponse(
         }
     }
 
-    fun jsonSerialize() = Json.encodeToString(value = this, serializer = serializer())
+    fun jsonSerialize() = libJson.encodeToString(value = this, serializer = serializer())
 
     data class Builder(
         val request: TokenRequest,

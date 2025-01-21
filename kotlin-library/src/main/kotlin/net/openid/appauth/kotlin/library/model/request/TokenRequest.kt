@@ -1,9 +1,9 @@
 package net.openid.appauth.kotlin.library.model.request
 
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.json.Json
 import net.openid.appauth.kotlin.library.extension.checkAdditionalParams
 import net.openid.appauth.kotlin.library.extension.stringToSet
+import net.openid.appauth.kotlin.library.json.libJson
 import net.openid.appauth.kotlin.library.model.AuthorizationServiceConfiguration
 import net.openid.appauth.kotlin.library.model.enum.GrantType
 import net.openid.appauth.kotlin.library.utils.CodeVerifierUtil
@@ -39,7 +39,7 @@ data class TokenRequest(
             return params
         }
 
-    fun jsonSerialize() = Json.encodeToString(value = this, serializer = serializer())
+    fun jsonSerialize() = libJson.encodeToString(value = this, serializer = serializer())
 
     class Builder(
         private var configuration: AuthorizationServiceConfiguration,
@@ -133,7 +133,7 @@ data class TokenRequest(
 
     companion object {
 
-        fun jsonDeserialize(json: String) = Json.decodeFromString(string = json, deserializer = serializer())
+        fun jsonDeserialize(json: String) = libJson.decodeFromString(string = json, deserializer = serializer())
 
         const val PARAM_CLIENT_ID = "client_id"
 

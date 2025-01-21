@@ -3,6 +3,7 @@ package net.openid.appauth.kotlin.library.state
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import net.openid.appauth.kotlin.library.exception.AuthorizationException
+import net.openid.appauth.kotlin.library.json.libJson
 import net.openid.appauth.kotlin.library.model.AuthorizationServiceConfiguration
 import net.openid.appauth.kotlin.library.model.enum.GrantType
 import net.openid.appauth.kotlin.library.model.request.TokenRequest
@@ -178,14 +179,14 @@ data class AuthState(
     }
 
     fun jsonSerialize(): String {
-        return Json.encodeToString(value = this, serializer = serializer())
+        return libJson.encodeToString(value = this, serializer = serializer())
     }
 
     companion object {
         const val EXPIRY_TIME_TOLERANCE_MS = 60000
 
         fun jsonDeserialize(serializedState: String): AuthState {
-            return Json.decodeFromString(string = serializedState, deserializer = serializer())
+            return libJson.decodeFromString(string = serializedState, deserializer = serializer())
         }
     }
 }

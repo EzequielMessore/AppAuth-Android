@@ -2,14 +2,10 @@ package net.openid.appauth.kotlin.library.exception
 
 import android.content.Intent
 import android.net.Uri
-import androidx.annotation.VisibleForTesting
-import androidx.collection.ArrayMap
-import java.util.Collections
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.json.Json
 import net.openid.appauth.kotlin.library.extension.checkNotEmpty
+import net.openid.appauth.kotlin.library.json.libJson
 import org.json.JSONException
-import org.json.JSONObject
 
 /**
  * Returned as a response to OAuth2 requests if they fail. Specifically:
@@ -334,7 +330,7 @@ class AuthorizationException(
      * Produces a JSON representation of the authorization exception, for transmission or storage.
      * This does not include any provided root cause.
      */
-    fun toJson() = Json.encodeToString(value = this, serializer = serializer())
+    fun toJson() = libJson.encodeToString(value = this, serializer = serializer())
 
     /**
      * Creates an intent from this exception. Used to carry error responses to the handling activity
@@ -546,7 +542,7 @@ class AuthorizationException(
         @Throws(JSONException::class)
         fun fromJson(jsonStr: String): AuthorizationException {
             checkNotEmpty(jsonStr) { "jsonStr cannot be null or empty" }
-            return Json.decodeFromString(string = jsonStr, deserializer = serializer())
+            return libJson.decodeFromString(string = jsonStr, deserializer = serializer())
         }
 
         /**

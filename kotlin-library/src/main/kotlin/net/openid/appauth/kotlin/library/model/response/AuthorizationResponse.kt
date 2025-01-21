@@ -4,11 +4,11 @@ import android.content.Intent
 import android.net.Uri
 import java.util.concurrent.TimeUnit
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.json.Json
 import net.openid.appauth.kotlin.library.extension.checkAdditionalParams
 import net.openid.appauth.kotlin.library.extension.checkNotEmpty
 import net.openid.appauth.kotlin.library.extension.filterNotNullValues
 import net.openid.appauth.kotlin.library.extension.stringToSet
+import net.openid.appauth.kotlin.library.json.libJson
 import net.openid.appauth.kotlin.library.model.AuthorizationManagementResponse
 import net.openid.appauth.kotlin.library.model.enum.GrantType
 import net.openid.appauth.kotlin.library.model.request.AuthorizationRequest
@@ -35,7 +35,7 @@ data class AuthorizationResponse(
         putExtra(EXTRA_RESPONSE, jsonSerialize())
     }
 
-    override fun jsonSerialize() = Json.encodeToString(serializer(), this)
+    override fun jsonSerialize() = libJson.encodeToString(serializer(), this)
 
     fun hasAccessTokenExpired(): Boolean {
         return hasAccessTokenExpired(SystemClock.INSTANCE)
@@ -177,7 +177,7 @@ data class AuthorizationResponse(
         )
 
         fun jsonDeserialize(json: String): AuthorizationResponse {
-            return Json.decodeFromString<AuthorizationResponse>(json)
+            return libJson.decodeFromString<AuthorizationResponse>(json)
         }
 
         fun fromIntent(dataIntent: Intent?): AuthorizationResponse? {
@@ -185,7 +185,7 @@ data class AuthorizationResponse(
             if (!contains(dataIntent)) return null
 
             return runCatching {
-                Json.decodeFromString<AuthorizationResponse>(dataIntent.getStringExtra(EXTRA_RESPONSE)!!)
+                libJson.decodeFromString<AuthorizationResponse>(dataIntent.getStringExtra(EXTRA_RESPONSE)!!)
             }.getOrElse {
                 throw IllegalArgumentException("Intent contains malformed auth response", it)
             }

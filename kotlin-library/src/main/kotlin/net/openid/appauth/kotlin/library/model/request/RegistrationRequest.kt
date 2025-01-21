@@ -1,8 +1,8 @@
 package net.openid.appauth.kotlin.library.model.request
 
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.json.Json
 import net.openid.appauth.kotlin.library.extension.checkAdditionalParams
+import net.openid.appauth.kotlin.library.json.libJson
 import net.openid.appauth.kotlin.library.model.AuthorizationServiceConfiguration
 
 @Serializable
@@ -19,7 +19,7 @@ data class RegistrationRequest(
     val additionalParameters: Map<String, String> = emptyMap(),
 ) {
 
-    fun jsonSerialize() = Json.encodeToString(value = this, serializer = serializer())
+    fun jsonSerialize() = libJson.encodeToString(value = this, serializer = serializer())
 
     class Builder(
         val redirectUris: List<String>,

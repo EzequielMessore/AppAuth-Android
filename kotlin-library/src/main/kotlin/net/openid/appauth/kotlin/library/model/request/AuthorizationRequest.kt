@@ -6,6 +6,7 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import net.openid.appauth.kotlin.library.extension.appendParameter
 import net.openid.appauth.kotlin.library.extension.checkAdditionalParams
+import net.openid.appauth.kotlin.library.json.libJson
 import net.openid.appauth.kotlin.library.model.AuthorizationManagementRequest
 import net.openid.appauth.kotlin.library.model.AuthorizationServiceConfiguration
 import net.openid.appauth.kotlin.library.utils.AuthorizationManagementUtil
@@ -35,7 +36,7 @@ data class AuthorizationRequest(
     val codeVerifierChallengeMethod: String? = null,
     val additionalParameters: Map<String, String> = emptyMap(),
 ) : AuthorizationManagementRequest {
-    override fun jsonSerializeString() = Json.encodeToString(value = this, serializer = serializer())
+    override fun jsonSerializeString() = libJson.encodeToString(value = this, serializer = serializer())
 
     override fun toUri(): Uri? {
         return configuration.authorizationEndpoint.toUri().buildUpon()?.apply {

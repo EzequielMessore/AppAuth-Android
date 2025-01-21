@@ -14,13 +14,6 @@ buildscript {
     }
 }
 
-subprojects {
-    repositories {
-        google()
-        mavenCentral()
-    }
-}
-
 try {
     def grgit = Grgit.open(currentDir: project.rootDir)
     def lastCommit = grgit.head()
