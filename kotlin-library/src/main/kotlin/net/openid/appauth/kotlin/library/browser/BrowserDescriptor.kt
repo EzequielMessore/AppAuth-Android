@@ -3,7 +3,6 @@ package net.openid.appauth.kotlin.library.browser
 import android.content.pm.PackageInfo
 import android.content.pm.Signature
 import android.util.Base64
-import androidx.annotation.NonNull
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 
@@ -12,13 +11,13 @@ import java.security.NoSuchAlgorithmException
  */
 class BrowserDescriptor(
     val packageName: String,
-    val signatureHashes: Set<String>,
-    val version: String,
+    val signatureHashes: Set<String>?,
+    val version: String?,
     val useCustomTab: Boolean,
 ) {
     constructor(packageInfo: PackageInfo, useCustomTab: Boolean) : this(
         packageInfo.packageName,
-        generateSignatureHashes(packageInfo.signatures),
+        generateSignatureHashes(packageInfo.signatures ?: arrayOf()),
         packageInfo.versionName,
         useCustomTab
     )
@@ -54,8 +53,10 @@ class BrowserDescriptor(
         hash = PRIME_HASH_FACTOR * hash + version.hashCode()
         hash = PRIME_HASH_FACTOR * hash + (if (useCustomTab) 1 else 0)
 
-        for (signatureHash in signatureHashes) {
-            hash = PRIME_HASH_FACTOR * hash + signatureHash.hashCode()
+        if (signatureHashes != null) {
+            for (signatureHash in signatureHashes) {
+                hash = PRIME_HASH_FACTOR * hash + signatureHash.hashCode()
+            }
         }
 
         return hash
@@ -86,7 +87,7 @@ class BrowserDescriptor(
          * Generates a set of SHA-512, Base64 url-safe encoded signature hashes from the provided
          * array of signatures.
          */
-        fun generateSignatureHashes(signatures: Array<Signature?>) = signatures
+        fun generateSignatureHashes(signatures: Array<out Signature?>) = signatures
             .filterNotNull()
             .map(::generateSignatureHash)
             .toSet()

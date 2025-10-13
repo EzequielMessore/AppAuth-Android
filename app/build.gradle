@@ -21,21 +21,27 @@ android {
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
     }
-
-    lintOptions {
-        lintConfig = file("${projectDir}/lint.xml")
+    packagingOptions {
+        resources {
+            excludes += ['META-INF/LICENSE.txt', 'META-INF/NOTICE.txt']
+        }
     }
+
 
     kotlinOptions {
         jvmTarget = '17'
+    }
+    lint {
+        disable 'InvalidPackage', 'TrulyRandom', 'UseCompoundDrawables', 'GradleDependency'
+        warningsAsErrors true
     }
 }
 
 dependencies {
     implementation project(':kotlin-library')
-    implementation "androidx.appcompat:appcompat:${project.androidXVersions.appcompat}"
-    implementation "androidx.annotation:annotation:${project.androidXVersions.annotation}"
-    implementation "com.google.android.material:material:${project.googleVersions.material}"
+    implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.annotation)
+    implementation(libs.material)
 }
 
 apply from: '../config/style.gradle'

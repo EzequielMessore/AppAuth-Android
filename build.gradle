@@ -31,22 +31,8 @@ try {
 }
 
 project.ext {
-    minSdkVersion = 26
-    compileSdkVersion = 34
-
-    googleVersions = [
-        glide                 : '4.12.0',
-        material              : '1.3.0',
-    ]
-
-    androidXVersions = [
-        annotation            : '1.2.0',
-        appCompat             : '1.3.0',
-        browser               : '1.3.0',
-    ]
-
-    okioVersion = '2.10.0'
-    jodaVersion = '2.10.10'
+    minSdkVersion = libs.versions.minSdk.get().toInteger()
+    compileSdkVersion = libs.versions.compileSdk.get().toInteger()
 }
 
 task showVersion {
