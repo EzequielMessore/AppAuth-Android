@@ -13,7 +13,7 @@ koin-bom = "3.5.6"
 
 gradle = "8.0.2"
 grgitGradle = "4.1.1"
-orgJacocoCore = "0.8.7"
+orgJacocoCore = "0.8.14"
 kotlinGradlePlugin = "2.0.0"
 kotlinSerialization = "2.0.0"
 kotlinSerializationJson = "1.7.0"
