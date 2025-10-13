@@ -25,7 +25,7 @@ kotlinSerialization = "2.0.0"
 kotlinSerializationJson = "1.7.0"
 
 startupRuntimeVersion = "1.1.1"
-coreKtxVersion = "1.13.1"
+coreKtxVersion = "1.17.0"
 kotlinVersion = "2.0.0"
 
 [libraries]
