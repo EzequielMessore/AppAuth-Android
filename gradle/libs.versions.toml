@@ -24,7 +24,7 @@ kotlinGradlePlugin = "2.0.0"
 kotlinSerialization = "2.0.0"
 kotlinSerializationJson = "1.7.0"
 
-startupRuntimeVersion = "1.1.1"
+startupRuntimeVersion = "1.2.0"
 coreKtxVersion = "1.13.1"
 kotlinVersion = "2.0.0"
 
