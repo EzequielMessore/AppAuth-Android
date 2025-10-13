@@ -1,6 +1,6 @@
 [versions]
 # Androidx
-annotationVersion = "1.8.0"
+annotationVersion = "1.9.1"
 appcompatVersion = "1.7.1"
 browserVersion = "1.8.0"
 
