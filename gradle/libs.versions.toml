@@ -14,13 +14,13 @@ browserVersion = "1.9.0"
 ktorVersion = "3.3.1"
 
 # Koin
-koin-bom = "4.1.0"
+koin-bom = "4.1.1"
 
-gradle = "8.12.3"
+gradle = "8.13.0"
 grgitGradle = "4.1.1"
 orgJacocoCore = "0.8.14"
-kotlinGradlePlugin = "2.2.0"
-kotlinSerialization = "2.2.0"
+kotlinGradlePlugin = "2.2.20"
+kotlinSerialization = "2.2.20"
 kotlinSerializationJson = "1.9.0"
 
 startupRuntimeVersion = "1.2.0"
