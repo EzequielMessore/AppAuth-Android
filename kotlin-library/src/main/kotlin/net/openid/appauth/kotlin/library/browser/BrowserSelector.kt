@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.pm.ResolveInfo
 import android.net.Uri
+import android.os.Build
 import androidx.browser.customtabs.CustomTabsService
 
 object BrowserSelector {
@@ -49,10 +50,17 @@ object BrowserSelector {
 
             try {
                 var defaultBrowserIndex = 0
-                val packageInfo = pm.getPackageInfo(
-                    info.activityInfo.packageName,
-                    PackageManager.GET_SIGNATURES
-                )
+                val packageInfo = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                    pm.getPackageInfo(
+                        info.activityInfo.packageName,
+                        PackageManager.GET_SIGNING_CERTIFICATES
+                    )
+                } else {
+                    pm.getPackageInfo(
+                        info.activityInfo.packageName,
+                        PackageManager.GET_SIGNATURES
+                    )
+                }
 
                 if (hasWarmupService(pm, info.activityInfo.packageName)) {
                     val customTabBrowserDescriptor = BrowserDescriptor(packageInfo, true)

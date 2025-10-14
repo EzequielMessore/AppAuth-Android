@@ -2,14 +2,15 @@ package net.openid.appauth.kotlin.library.networking
 
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
+import io.ktor.client.request.forms.FormDataContent
 import io.ktor.client.request.headers
 import io.ktor.client.request.post
+import io.ktor.client.request.setBody
 import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
+import io.ktor.http.Parameters
 import io.ktor.http.contentType
-import io.ktor.util.InternalAPI
 import net.openid.appauth.kotlin.library.LibraryComponent
-import net.openid.appauth.kotlin.library.extension.formUrlEncode
 import net.openid.appauth.kotlin.library.model.jwt.IdToken
 import net.openid.appauth.kotlin.library.model.request.TokenRequest
 import net.openid.appauth.kotlin.library.model.response.TokenResponse
@@ -20,7 +21,6 @@ class TokenServiceApi : LibraryComponent {
 
     private val client: HttpClient by inject<HttpClient>()
 
-    @OptIn(InternalAPI::class)
     suspend fun performTokenRequest(
         tokenRequest: TokenRequest,
     ): Result<TokenResponse> {
@@ -29,7 +29,9 @@ class TokenServiceApi : LibraryComponent {
 
             client.post(tokenRequest.configuration.tokenEndpoint) {
                 contentType(ContentType.Application.FormUrlEncoded)
-                body = parameters.formUrlEncode()
+                setBody(FormDataContent(Parameters.build {
+                    parameters.forEach { (key, value) -> append(key, value) }
+                }))
                 headers {
                     append(HttpHeaders.Accept, ContentType.Application.Json.toString())
                 }

@@ -11,22 +11,19 @@ appcompatVersion = "1.7.1"
 browserVersion = "1.9.0"
 
 # Ktor
-ktorVersion = "2.3.13"
+ktorVersion = "3.3.1"
 
 # Koin
-koin-bom = "3.5.6"
-
+koin-bom = "4.1.0"
 
 gradle = "8.12.3"
 grgitGradle = "4.1.1"
 orgJacocoCore = "0.8.14"
-kotlinGradlePlugin = "2.0.0"
-kotlinSerialization = "2.0.0"
-kotlinSerializationJson = "1.7.0"
+kotlinGradlePlugin = "2.2.0"
+kotlinSerialization = "2.2.0"
+kotlinSerializationJson = "1.9.0"
 
-startupRuntimeVersion = "1.1.1"
-coreKtxVersion = "1.13.1"
-kotlinVersion = "2.0.0"
+startupRuntimeVersion = "1.2.0"
 
 [libraries]
 # AndroidX
@@ -60,10 +57,6 @@ org-jacoco-core = { module = "org.jacoco:org.jacoco.core", version.ref = "orgJac
 grgit-gradle = { module = "org.ajoberstar.grgit:grgit-gradle", version.ref = "grgitGradle" }
 kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlinGradlePlugin" }
 kotlin-serialization-gradle = { module = "org.jetbrains.kotlin:kotlin-serialization", version.ref = "kotlinSerialization" }
-androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtxVersion" }
-
-[plugins]
-jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlinVersion" }
 
 [bundles]
 ktor = ["ktor-core", "ktor-logging", "ktor-content-negotiation", "ktor-okhttp", "ktor-serialization"]
