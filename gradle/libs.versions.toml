@@ -6,7 +6,7 @@ versionCode = "1"
 versionName = "1.0.8"
 
 # Androidx
-annotationVersion = "1.9.1"
+annotationVersion = "1.10.0"
 appcompatVersion = "1.7.1"
 browserVersion = "1.9.0"
 
