@@ -11,7 +11,7 @@ appcompatVersion = "1.7.1"
 browserVersion = "1.9.0"
 
 # Ktor
-ktorVersion = "3.3.1"
+ktorVersion = "3.5.2"
 
 # Koin
 koin-bom = "4.1.1"
