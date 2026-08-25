@@ -7,7 +7,7 @@ versionName = "1.0.8"
 
 # Androidx
 annotationVersion = "1.9.1"
-appcompatVersion = "1.7.1"
+appcompatVersion = "1.8.0"
 browserVersion = "1.9.0"
 
 # Ktor
